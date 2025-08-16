@@ -159,7 +159,7 @@ const projectList = document.querySelector("#projectList");
 //const firstCard = new ProjectCard("project_personal", "Personal Website", "Showcase your skills and projects.", "Build a website to highlight your programming abilities, experience, and portfolio. This is a great way to showcase your work to potential employers.", "./images/personal_site_card.webp", "./images/personal_site_spotlight.webp", "https://example.com/project1");
 
 //This is to test if we can build one without an object
-//But I keep getting 'undefined'
+//So, I was getting 'undefined', but now it works, so I am doing something right!
 
 const projectCard = document.createElement("div");
 projectCard.classList.add("projectCard");
@@ -214,7 +214,9 @@ getProjectsData().then( response => {
 
 const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const emailAddressForm = document.QuerySelector = "#contactEmail";
+const emailErrorDisplay = document.QuerySelector = "#emailError";
+emailErrorDisplay.style
 
 if (emailAddressForm !== validEmail) {
-    
+    emailErrorDisplay.textContent = "Invalid e-mail address!";
 }
