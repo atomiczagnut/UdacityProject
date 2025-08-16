@@ -161,7 +161,9 @@ const projectList = document.querySelector("#projectList");
 //This is to test if we can build one without an object
 //So, I was getting 'undefined', but now it works, so I am doing something right!
 
-const projectCard = document.createElement("div");
+//Once the objects start working, delete the comment block below
+
+/* const projectCard = document.createElement("div");
 projectCard.classList.add("projectCard");
 projectCard.id = "personal_project";
 
@@ -177,7 +179,7 @@ const cardText = document.createElement("p");
 cardText.textContent = "This is a personal website.";
 projectCard.append(cardText);
 
-projectList.append(projectCard);
+projectList.append(projectCard); */
 
 //Populate the Projects section with a for..in loop, and try to handle missing data
 //This is where I need the most help!
@@ -186,14 +188,15 @@ getProjectsData().then( response => {
     
     for (let key in response) {
         if (response.hasOwnProperty(key)) {
-            
-            projectsData.project_id = response.project_id;
-            projectsData.project_name = response.project_name;
-            projectsData.short_description = response.short_description;
-            projectsData.long_description = response.long_description;
-            projectsData.card_image = response.card_image;
-            projectsData.spotlight_image = response.card_image;
-            projectsData.url = response.url;
+            project_id = response.project_id;
+            project_name = response.project_name;
+            short_description = response.short_description;
+            long_description = response.long_description;
+            card_image = response.card_image;
+            spotlight_image = response.card_image;
+            url = response.url;
+            let projectCard = new ProjectCard(projectsData.project_id, projectsData.project_name, projectsData.short_description, projectsData.long_description, projectsData.card_image, projectsData.spotlight_image, projectsData.url);
+            projectsData.push(projectCard);
         } else {
             //This is where we handle errors, such as missing data
             //Probably with multiple if else statements
@@ -202,10 +205,6 @@ getProjectsData().then( response => {
             console.error(`Project Card error: ${console.error}`);
         }
     };
-
-    //This should push each Project Card data into the global array called projectsData
-    let projectCard = new ProjectCard(projectsData.project_id, projectsData.project_name, projectsData.short_description, projectsData.long_description, projectsData.card_image, projectsData.spotlight_image, projectsData.url);
-    projectsData.push(projectCard);
 });
 
 //use try/catch to handle any other errors
