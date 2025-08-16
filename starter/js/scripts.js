@@ -150,10 +150,6 @@ class ProjectCard {
     };
 };
 
-//Let's populate the DOM with one card for testing purposes
-
-const projectList = document.querySelector("#projectList");
-
 //The line below will test if we can build an instance of our ProjectCard
 
 //const firstCard = new ProjectCard("project_personal", "Personal Website", "Showcase your skills and projects.", "Build a website to highlight your programming abilities, experience, and portfolio. This is a great way to showcase your work to potential employers.", "./images/personal_site_card.webp", "./images/personal_site_spotlight.webp", "https://example.com/project1");
@@ -185,7 +181,6 @@ projectList.append(projectCard); */
 //This is where I need the most help!
 
 getProjectsData().then( response => {
-    
     for (let key in response) {
         if (response.hasOwnProperty(key)) {
             project_id = response.project_id;
@@ -193,19 +188,28 @@ getProjectsData().then( response => {
             short_description = response.short_description;
             long_description = response.long_description;
             card_image = response.card_image;
-            spotlight_image = response.card_image;
+            spotlight_image = response.spotlight_image;
             url = response.url;
-            let projectCard = new ProjectCard(projectsData.project_id, projectsData.project_name, projectsData.short_description, projectsData.long_description, projectsData.card_image, projectsData.spotlight_image, projectsData.url);
-            projectsData.push(projectCard);
         } else {
-            //This is where we handle errors, such as missing data
-            //Probably with multiple if else statements
-            //Route missing card images to the spotlight image
-            //Or the other way around
+            if (response.card_image === undefined) {
+                card_image = response.spotlight_image;
+            } else if (response.spotlight_image === undefined) {
+                spotlight_image = response.card_image;
+            } else {
             console.error(`Project Card error: ${console.error}`);
         }
+    }
+    let projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_image, spotlight_image, url);
+    projectsData.push(projectCardInstance);
     };
 });
+
+//Let's populate the DOM with one card for testing purposes
+
+const projectList = document.querySelector("#projectList");
+
+projectList.append(projectsData[0].buildCard());
+
 
 //use try/catch to handle any other errors
 
