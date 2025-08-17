@@ -125,6 +125,8 @@ class ProjectCard {
         const cardText = document.createElement("p");
         cardText.textContent = this.short_desc;
         projectCard.append(cardText);
+
+        return projectCard;
     };
 
     //Method for the Project Spotlight
@@ -182,14 +184,14 @@ projectList.append(projectCard); */
 
 getProjectsData().then( response => {
     for (let key in response) {
-        if (response.hasOwnProperty(key)) {
-            project_id = response.project_id;
-            project_name = response.project_name;
-            short_description = response.short_description;
-            long_description = response.long_description;
-            card_image = response.card_image;
-            spotlight_image = response.spotlight_image;
-            url = response.url;
+        if (true) {
+            project_id = response[key].project_id;
+            project_name = response[key].project_name;
+            short_description = response[key].short_description;
+            long_description = response[key].long_description;
+            card_image = fixPath(response[key].card_image);
+            spotlight_image = fixPath(response[key].spotlight_image);
+            url = response[key].url;
         } else {
             if (response.card_image === undefined) {
                 card_image = response.spotlight_image;
@@ -201,6 +203,8 @@ getProjectsData().then( response => {
     }
     let projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_image, spotlight_image, url);
     projectsData.push(projectCardInstance);
+
+
     };
 });
 
@@ -208,7 +212,7 @@ getProjectsData().then( response => {
 
 const projectList = document.querySelector("#projectList");
 
-projectList.append(projectsData[0].buildCard());
+
 
 //If this works, we will populate the DOM with the rest of the projectsData
 
@@ -230,8 +234,8 @@ projectList.append(projectsData[0].buildCard());
 const legalChars = /[^a-zA-Z0-9@._-]/ 
 
 const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const emailAddressForm = document.QuerySelector("#contactEmail");
-const emailErrorDisplay = document.QuerySelector("#emailError");
+const emailAddressForm = document.querySelector("#contactEmail");
+const emailErrorDisplay = document.querySelector("#emailError");
 
 if (emailAddressForm === "") {
     emailErrorDisplay.textContent = "E-mail must be filled out!";
