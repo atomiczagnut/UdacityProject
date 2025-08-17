@@ -97,7 +97,7 @@ let projectsData = [];
 //This might need to be tweaked
 
 class ProjectCard {
-    constrcutor(id, name, short_desc, long_desc, card_img, spotlight_img, url) {
+    constructor(id, name, short_desc, long_desc, card_img, spotlight_img, url) {
         this.id = id;
         this.name = name;
         this.short_desc = short_desc;
