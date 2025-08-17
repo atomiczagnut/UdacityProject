@@ -217,20 +217,31 @@ projectList.append(projectsData[0].buildCard());
 
 //E-mail validation
 
+const legalChars = /[^a-zA-Z0-9@._-]/ 
+
 const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const legalEmailChars = /[^a-zA-Z0-9@._-]/ 
-const emailAddressForm = document.QuerySelector = "#contactEmail";
-const emailErrorDisplay = document.QuerySelector = "#emailError";
-emailErrorDisplay.style.color = red;
+const emailAddressForm = document.QuerySelector("#contactEmail");
+const emailErrorDisplay = document.QuerySelector("#emailError");
 
 if (emailAddressForm === "") {
     emailErrorDisplay.textContent = "E-mail must be filled out!";
 } else if (emailAddressForm !== validEmail) {
     emailErrorDisplay.textContent = "Invalid E-Mail Address!";
-} else if (emailAddressForm !== legalEmailChars) {
+} else if (emailAddressForm !== legalChars) {
     emailErrorDisplay.textContent = "E-mail contains invalid characters!";
 };
 
 //Message validation
 
+const msgForm = document.QuerySelector("#contactMessage");
+const msgFormError = document.QuerySelector("#messageError");
+let charsInMsg = document.querySelector("#charactersLeft");
+
+//Add an event listener that watches how many characters are in the msgForm
+//It updates the charsInMsg, and sends a signal to msgFormError if that exeeds 300 
+//TODO: That will need to be a function
+ 
+if (msgForm !== legalChars) {
+    msgFormError.textContent = "Message contains illegal characters!";
+}
 
