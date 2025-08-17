@@ -210,11 +210,17 @@ const projectList = document.querySelector("#projectList");
 
 projectList.append(projectsData[0].buildCard());
 
+//If this works, we will populate the DOM with the rest of the projectsData
+
+//Add event handlers for the arrows around here
+
+//Try not to beat yourself up too, much.  You are trying your best
+
 //Use try/catch to handle any other errors
 
 //Validitation stuff
 
-//All of this should have happen after we click the button with id #formSubmit
+//All of this should have happened after we clicked the button with id #formSubmit
 //Except for the character counting event listener
 
 //Should that be an event listener as well?
@@ -260,4 +266,3 @@ const handleNumberOfChars = (numberOfChars) => {
 msgForm.addEventListener("input", (handleNumberOfChars));
 
 //I need to work more on Event Listeners
-
