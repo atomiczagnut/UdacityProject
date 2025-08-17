@@ -245,17 +245,19 @@ let msgLength = msgForm.length;
 //Add an event listener that watches how many characters are in the msgForm
 //It updates the charsInMsg, and sends a signal to msgFormError if that exeeds 300 
 
-//TODO: Work on making it an event listener
 
 const handleNumberOfChars = (numberOfChars) => {
-    charsInMsg.textContent = `Charcters: ${msgLength}/300`
-}
+    charsInMsg.textContent = `Charcters: ${msgLength} / 300`;
+    if (msgForm !== legalChars) {
+        msgFormError.textContent = "Message contains illegal characters!";
+    } else if (msgLength > 300) {
+        msgFormError.textContent = "Message conatains too many characters!";
+    };
+};
+
+//TODO: Work on making it an event listener
 
 msgForm.addEventListener("input", (handleNumberOfChars));
- 
-if (msgForm !== legalChars) {
-    msgFormError.textContent = "Message contains illegal characters!";
-} else if (msgLength > 300) {
-    msgFormError.textContent = "Message conatains too many characters!";
-}
+
+//I need to work more on Event Listeners
 
