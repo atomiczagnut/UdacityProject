@@ -251,5 +251,7 @@ function handleNumberOfChars(numberOfChars) {
  
 if (msgForm !== legalChars) {
     msgFormError.textContent = "Message contains illegal characters!";
+} else if (msgLength > 300) {
+    msgFormError.textContent = "Message conatains too many characters!";
 }
 
