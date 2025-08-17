@@ -217,6 +217,8 @@ projectList.append(projectsData[0].buildCard());
 //All of this should have happen after we click the button with id #formSubmit
 //Except for the character counting event listener
 
+//Should that be an event listener as well?
+
 //E-mail validation
 
 const legalChars = /[^a-zA-Z0-9@._-]/ 
@@ -243,11 +245,13 @@ let msgLength = msgForm.length;
 //Add an event listener that watches how many characters are in the msgForm
 //It updates the charsInMsg, and sends a signal to msgFormError if that exeeds 300 
 
-//TODO: That will need to be a function
+//TODO: Work on making it an event listener
 
-function handleNumberOfChars(numberOfChars) {
-    charsInMsg = `Charcters: ${msgLength}/300`
+const handleNumberOfChars = (numberOfChars) => {
+    charsInMsg.textContent = `Charcters: ${msgLength}/300`
 }
+
+msgForm.addEventListener("input", (handleNumberOfChars));
  
 if (msgForm !== legalChars) {
     msgFormError.textContent = "Message contains illegal characters!";
