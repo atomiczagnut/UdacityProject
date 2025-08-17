@@ -210,10 +210,12 @@ const projectList = document.querySelector("#projectList");
 
 projectList.append(projectsData[0].buildCard());
 
+//Use try/catch to handle any other errors
 
-//use try/catch to handle any other errors
+//Validitation stuff
 
-//validitation stuff
+//All of this should have happen after we click the button with id #formSubmit
+//Except for the character counting event listener
 
 //E-mail validation
 
@@ -236,10 +238,16 @@ if (emailAddressForm === "") {
 const msgForm = document.QuerySelector("#contactMessage");
 const msgFormError = document.QuerySelector("#messageError");
 let charsInMsg = document.querySelector("#charactersLeft");
+let msgLength = msgForm.length;
 
 //Add an event listener that watches how many characters are in the msgForm
 //It updates the charsInMsg, and sends a signal to msgFormError if that exeeds 300 
+
 //TODO: That will need to be a function
+
+function handleNumberOfChars(numberOfChars) {
+    charsInMsg = `Charcters: ${msgLength}/300`
+}
  
 if (msgForm !== legalChars) {
     msgFormError.textContent = "Message contains illegal characters!";
