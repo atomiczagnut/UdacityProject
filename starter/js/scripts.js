@@ -7,6 +7,10 @@
 
 //Function to fix errors in paths by deleting the first '.' in the path string
 
+//This is a default image in case anything fails
+
+const placeHolderImage = "card_placeholder_bg.webp";
+
 function fixPath(pathToBeFixed) {
     return pathToBeFixed.slice(1);
 };
@@ -182,41 +186,35 @@ projectList.append(projectCard); */
 //Populate the Projects section with a for..in loop, and try to handle missing data
 //This is where I need the most help!
 
+const projectList = document.querySelector("#projectList");
+
 getProjectsData().then( response => {
-    for (let key in response) {
+    for (let key in response ) {
         if (true) {
             project_id = response[key].project_id;
             project_name = response[key].project_name;
             short_description = response[key].short_description;
             long_description = response[key].long_description;
-            card_image = fixPath(response[key].card_image);
-            spotlight_image = fixPath(response[key].spotlight_image);
+            const cardImage = response[key].card_image || "./starter/images/card_placeholder_bg.webp";
+            card_image = fixPath(cardImage);
+            const spotlightImage = response[key].spotlight_image || "./starter/images/spotlight_placeholder_bg.webp";
+            spotlight_image = fixPath(spotlightImage);
             url = response[key].url;
-        } else {
-            if (response.card_image === undefined) {
-                card_image = response.spotlight_image;
-            } else if (response.spotlight_image === undefined) {
-                spotlight_image = response.card_image;
-            } else {
-            console.error(`Project Card error: ${console.error}`);
+            
+            const projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_image, spotlight_image, url) 
+    
+            
+            projectList.append(projectCardInstance.buildCard());
         }
     }
-    let projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_image, spotlight_image, url);
-    projectsData.push(projectCardInstance);
-
-
-    };
 });
-
-//Let's populate the DOM with one card for testing purposes
-
-const projectList = document.querySelector("#projectList");
-
-
 
 //If this works, we will populate the DOM with the rest of the projectsData
 
 //Add event handlers for the arrows around here
+
+document.querySelector("#arrow-left").addEventListener("click", () => {} );
+document.querySelector("#arrow-right").addEventListener("click", () => {} );
 
 //Try not to beat yourself up too, much.  You are trying your best
 
@@ -247,8 +245,8 @@ if (emailAddressForm === "") {
 
 //Message validation
 
-const msgForm = document.QuerySelector("#contactMessage");
-const msgFormError = document.QuerySelector("#messageError");
+const msgForm = document.querySelector("#contactMessage");
+const msgFormError = document.querySelector("#messageError");
 let charsInMsg = document.querySelector("#charactersLeft");
 let msgLength = msgForm.length;
 
