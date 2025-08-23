@@ -165,7 +165,12 @@ const numberOfProjects = projectsData.length;
 //Spotlight one project
 //Default to the first one
 
-let spotlightProject = projectsData[0];
+//The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
+
+let spotlightProjectNum = 0
+let spotlightProject = projectsData[spotlightProjectNum];
+
+//Target the appropriate DOM elments
 
 const spotlightContainer = document.querySelector("#projectSpotlight")
 const spotlightTitles = document.querySelector("#spotlightTitles")
@@ -193,11 +198,16 @@ function buildProjectSpotlight() {
 //The functions for the arrows
 
 function arrowLeftHandler() {
-
+    spotlightProjectNum -= 1
+    if (spotlightProjectNum === 0) {
+        spotlightProjectNum = (numberOfProjects - 1);
+    };
+    spotlightProject = projectsData[spotlightProjectNum]; 
 };
 
 function arrowRightHandler() {
-
+    (spotlightProjectNum += 1) % numberOfProjects;
+    spotlightProject = projectsData[spotlightProjectNum]; 
 };
 
 //Add event handlers for the arrows around here
@@ -254,6 +264,6 @@ const handleNumberOfChars = (numberOfChars) => {
 
 //TODO: Work on making it an event listener
 
-msgForm.addEventListener("input", (handleNumberOfChars));
+msgForm.addEventListener("input", handleNumberOfChars);
 
 //I need to work more on Event Listeners
