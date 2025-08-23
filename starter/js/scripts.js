@@ -167,7 +167,7 @@ const numberOfProjects = projectsData.length;
 
 //The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
 
-let spotlightProjectNum = 0
+let spotlightProjectNum = 0;
 let spotlightProject = projectsData[spotlightProjectNum];
 
 //Target the appropriate DOM elments
@@ -177,23 +177,27 @@ const spotlightTitles = document.querySelector("#spotlightTitles")
 
  //Method for the Project Spotlight
 
-function buildProjectSpotlight() {
+function buildProjectSpotlight(project) {
 
-    spotlightContainer.style.backgroundImage = `url(${spotlightProject.spotlight_img})`;
+    spotlightContainer.style.backgroundImage = `url(${project.spotlight_image})`;
 
     const spotlightTitle = documnet.createElement("h3");
-    spotlightTitle.textContent = spotlightProject.project_name;
+    spotlightTitle.textContent = project.project_name;
     spotlightTitles.append(spotlightTitle);
 
     const spotlightText = document.createElement("p");
-    spotlightText.textContent = spotlightProject.long_desc;
+    spotlightText.textContent = project.long_desc;
     spotlightTitles.append(spotlightText);
 
     const spotlightLink = document.createElement("a");
     spotlightLink.textContent = "Click here to see more...";
-    spotlightLink.setAttribute("href", spotlightProject.url);
+    spotlightLink.setAttribute("href", project.url);
     spotlightTitles.append(spotlightLink);
 };
+
+//Build the default project
+
+buildProjectSpotlight(spotlightProject);
 
 //The functions for the arrows
 
