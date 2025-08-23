@@ -132,59 +132,9 @@ class ProjectCard {
 
         return projectCard;
     };
-
-    //Method for the Project Spotlight
-
-    buildProjectSpotlight() {
-        const spotlightContainer = document.createElement("div");
-        spotlightContainer.id = "projectSpotlight";
-
-        spotlightContainer.style.backgroundImage = `url(${this.spotlight_img})`;
-
-        const spotlightTitle = document.createElement("h3");
-        spotlightTitle.id = "spotlightTitles";
-        spotlightContainer.append(spotlightTitle);
-
-        const spotlightText = document.createElement("p");
-        spotlightText.textContent = this.long_desc;
-        spotlightContainer.append(spotlightText);
-
-        const spotlightLink = document.createElement("a");
-        spotlightLink.textContent = "Click here to see more...";
-        spotlightLink.setAttribute("href", this.url);
-        spotlightContainer.append(spotlightLink);
-    };
 };
 
-//The line below will test if we can build an instance of our ProjectCard
-
-//const firstCard = new ProjectCard("project_personal", "Personal Website", "Showcase your skills and projects.", "Build a website to highlight your programming abilities, experience, and portfolio. This is a great way to showcase your work to potential employers.", "./images/personal_site_card.webp", "./images/personal_site_spotlight.webp", "https://example.com/project1");
-
-//This is to test if we can build one without an object
-//So, I was getting 'undefined', but now it works, so I am doing something right!
-
-//Once the objects start working, delete the comment block below
-
-/* const projectCard = document.createElement("div");
-projectCard.classList.add("projectCard");
-projectCard.id = "personal_project";
-
-const cardName = document.createElement("h4");
-cardName.textContent = "Personal Website";
-projectCard.append(cardName);
-
-const cardImage = document.createElement("img");
-cardImage.setAttribute("src", "./images/personal_site_card.webp");
-projectCard.append(cardImage);
-
-const cardText = document.createElement("p");
-cardText.textContent = "This is a personal website.";
-projectCard.append(cardText);
-
-projectList.append(projectCard); */
-
-//Populate the Projects section with a for..in loop, and try to handle missing data
-//This is where I need the most help!
+//Populate the project list with the project card data
 
 const projectList = document.querySelector("#projectList");
 
@@ -203,18 +153,57 @@ getProjectsData().then( response => {
             
             const projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_image, spotlight_image, url) 
     
-            
             projectList.append(projectCardInstance.buildCard());
         }
     }
 });
 
-//If this works, we will populate the DOM with the rest of the projectsData
+//Find out how many projects there are
+
+const numberOfProjects = projectsData.length;
+
+//Spotlight one project
+//Default to the first one
+
+let spotlightProject = projectsData[0];
+
+const spotlightContainer = document.querySelector("#projectSpotlight")
+const spotlightTitles = document.querySelector("#spotlightTitles")
+
+ //Method for the Project Spotlight
+
+function buildProjectSpotlight() {
+
+    spotlightContainer.style.backgroundImage = `url(${spotlightProject.spotlight_img})`;
+
+    const spotlightTitle = documnet.createElement("h3");
+    spotlightTitle.textContent = spotlightProject.project_name;
+    spotlightTitles.append(spotlightTitle);
+
+    const spotlightText = document.createElement("p");
+    spotlightText.textContent = spotlightProject.long_desc;
+    spotlightTitles.append(spotlightText);
+
+    const spotlightLink = document.createElement("a");
+    spotlightLink.textContent = "Click here to see more...";
+    spotlightLink.setAttribute("href", spotlightProject.url);
+    spotlightTitles.append(spotlightLink);
+};
+
+//The functions for the arrows
+
+function arrowLeftHandler() {
+
+};
+
+function arrowRightHandler() {
+
+};
 
 //Add event handlers for the arrows around here
 
-document.querySelector("#arrow-left").addEventListener("click", () => {} );
-document.querySelector("#arrow-right").addEventListener("click", () => {} );
+document.querySelector("#arrow-left").addEventListener("click", arrowLeftHandler);
+document.querySelector("#arrow-right").addEventListener("click", arrowRightHandler);
 
 //Try not to beat yourself up too, much.  You are trying your best
 
