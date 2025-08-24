@@ -73,9 +73,6 @@ getAboutMeData().then( response => {
     aboutMeContainer.append(headshotContainer);
 });
 
-//I just want to note, everything above this line seems to work!
-//Don't mess with it!
-
 //get the Projects data
 
 async function getProjectsData() {
@@ -98,7 +95,6 @@ async function getProjectsData() {
 let projectsData = [];
 
 //Create a class for your project card data
-//This might need to be tweaked
 
 class ProjectCard {
     constructor(id, name, short_desc, long_desc, card_img, spotlight_img, url) {
@@ -145,18 +141,23 @@ getProjectsData().then( response => {
             project_name = response[key].project_name;
             short_description = response[key].short_description;
             long_description = response[key].long_description;
-            const cardImage = response[key].card_image || "./starter/images/card_placeholder_bg.webp";
-            card_image = fixPath(cardImage);
-            const spotlightImage = response[key].spotlight_image || "./starter/images/spotlight_placeholder_bg.webp";
-            spotlight_image = fixPath(spotlightImage);
+            const cardImg = response[key].card_image || "./starter/images/card_placeholder_bg.webp";
+            card_img = fixPath(cardImg);
+            const spotlightImg = response[key].spotlight_image || "./starter/images/spotlight_placeholder_bg.webp";
+            spotlight_img = fixPath(spotlightImg);
             url = response[key].url;
             
-            const projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_image, spotlight_image, url) 
-    
+            const projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_img, spotlight_img, url) 
+            
+            projectsData.push(projectCardInstance);
+
             projectList.append(projectCardInstance.buildCard());
         }
     }
 });
+
+//I just want to note, everything above this line seems to work!
+//Don't mess with it!
 
 //Find out how many projects there are
 
@@ -176,12 +177,13 @@ const spotlightContainer = document.querySelector("#projectSpotlight")
 const spotlightTitles = document.querySelector("#spotlightTitles")
 
  //Method for the Project Spotlight
+ 
 
 function buildProjectSpotlight(project) {
 
-    spotlightContainer.style.backgroundImage = `url(${project.spotlight_image})`;
+    spotlightContainer.style.backgroundImage = `url(${project.spotlight_img})`;
 
-    const spotlightTitle = documnet.createElement("h3");
+    const spotlightTitle = document.createElement("h3");
     spotlightTitle.textContent = project.project_name;
     spotlightTitles.append(spotlightTitle);
 
@@ -224,11 +226,6 @@ document.querySelector("#arrow-right").addEventListener("click", arrowRightHandl
 //Use try/catch to handle any other errors
 
 //Validitation stuff
-
-//All of this should have happened after we clicked the button with id #formSubmit
-//Except for the character counting event listener
-
-//Should that be an event listener as well?
 
 //E-mail validation
 
