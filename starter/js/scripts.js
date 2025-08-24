@@ -5,11 +5,11 @@
 //It is meant to teach working with the DOM and JavaScript
 //It has slowly driven me insane :P
 
-//Function to fix errors in paths by deleting the first '.' in the path string
-
 //This is a default image in case anything fails
 
 const placeHolderImage = "card_placeholder_bg.webp";
+
+//Function to fix errors in paths by deleting the first '.' in the path string
 
 function fixPath(pathToBeFixed) {
     return pathToBeFixed.slice(1);
@@ -73,6 +73,11 @@ getAboutMeData().then( response => {
     aboutMeContainer.append(headshotContainer);
 });
 
+//Global object for the projects data
+//Should it be an empty array that we populate with objects?
+
+let projectsData = [];
+
 //get the Projects data
 
 async function getProjectsData() {
@@ -89,10 +94,15 @@ async function getProjectsData() {
     }
 };
 
-//Global object for the projects data
-//Should it be an empty array that we populate with objects?
+//The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
 
-let projectsData = [];
+let spotlightProjectNum = 0;
+let spotlightProject = projectsData[spotlightProjectNum];
+
+//Target the appropriate DOM elments
+
+const spotlightContainer = document.querySelector("#projectSpotlight")
+const spotlightTitles = document.querySelector("#spotlightTitles") 
 
 //Create a class for your project card data
 
@@ -128,6 +138,26 @@ class ProjectCard {
 
         return projectCard;
     };
+
+    //Method to build the spotlight
+    
+    buildProjectSpotlight() {
+
+        spotlightContainer.style.backgroundImage = `url(${this.spotlight_img})`;
+
+        const spotlightTitle = document.createElement("h3");
+        spotlightTitle.textContent = this.project_name;
+        spotlightTitles.append(spotlightTitle);
+
+        const spotlightText = document.createElement("p");
+        spotlightText.textContent = this.long_desc;
+        spotlightTitles.append(spotlightText);
+
+        const spotlightLink = document.createElement("a");
+        spotlightLink.textContent = "Click here to see more...";
+        spotlightLink.setAttribute("href", this.url);
+        spotlightTitles.append(spotlightLink);
+    };
 };
 
 //Populate the project list with the project card data
@@ -152,12 +182,11 @@ getProjectsData().then( response => {
             projectsData.push(projectCardInstance);
 
             projectList.append(projectCardInstance.buildCard());
+
+            buildProjectSpotlight(spotlightProject);
         }
     }
 });
-
-//I just want to note, everything above this line seems to work!
-//Don't mess with it!
 
 //Find out how many projects there are
 
@@ -166,40 +195,8 @@ const numberOfProjects = projectsData.length;
 //Spotlight one project
 //Default to the first one
 
-//The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
-
-let spotlightProjectNum = 0;
-let spotlightProject = projectsData[spotlightProjectNum];
-
-//Target the appropriate DOM elments
-
-const spotlightContainer = document.querySelector("#projectSpotlight")
-const spotlightTitles = document.querySelector("#spotlightTitles")
-
- //Method for the Project Spotlight
- 
-
-function buildProjectSpotlight(project) {
-
-    spotlightContainer.style.backgroundImage = `url(${project.spotlight_img})`;
-
-    const spotlightTitle = document.createElement("h3");
-    spotlightTitle.textContent = project.project_name;
-    spotlightTitles.append(spotlightTitle);
-
-    const spotlightText = document.createElement("p");
-    spotlightText.textContent = project.long_desc;
-    spotlightTitles.append(spotlightText);
-
-    const spotlightLink = document.createElement("a");
-    spotlightLink.textContent = "Click here to see more...";
-    spotlightLink.setAttribute("href", project.url);
-    spotlightTitles.append(spotlightLink);
-};
-
-//Build the default project
-
-buildProjectSpotlight(spotlightProject);
+//This is where I was saying buildProjectSpotlight(spotlightProject)
+//But that doesn't work!
 
 //The functions for the arrows
 
