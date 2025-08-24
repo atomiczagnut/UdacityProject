@@ -183,7 +183,10 @@ getProjectsData().then( response => {
 
             projectList.append(projectCardInstance.buildCard());
 
-            buildProjectSpotlight(spotlightProject);
+            //buildProjectSpotlight(spotlightProject);
+
+            //For some reason, commenting out that line will allow the projectList to build the cards
+            //But attempting to build the project spotlight breaks everything!
         }
     }
 });
@@ -250,7 +253,6 @@ let msgLength = msgForm.length;
 //Add an event listener that watches how many characters are in the msgForm
 //It updates the charsInMsg, and sends a signal to msgFormError if that exeeds 300 
 
-
 const handleNumberOfChars = (numberOfChars) => {
     charsInMsg.textContent = `Charcters: ${msgLength} / 300`;
     if (msgForm !== legalChars) {
@@ -264,4 +266,4 @@ const handleNumberOfChars = (numberOfChars) => {
 
 msgForm.addEventListener("input", handleNumberOfChars);
 
-//I need to work more on Event Listeners
+//I need to work more on Event Listeners!
