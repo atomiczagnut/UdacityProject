@@ -239,7 +239,6 @@ getProjectsData().then( response => {
 //E-mail validation
 
 //None of these should fire until you hit the submit button
-
 //Except for the character counter, we want that live!
 
 const legalChars = /[^a-zA-Z0-9@._-]/; 
@@ -281,5 +280,3 @@ const handleNumberOfChars = () => {
 //TODO: Work on making it an event listener
 
 msgForm.addEventListener("input", handleNumberOfChars);
-
-//I don't know what I'm doing wrong at this point!
