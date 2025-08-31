@@ -78,10 +78,6 @@ getAboutMeData().then( response => {
 
 let projectsData = [];
 
-//The spotlight should default to the first one
-
-let spotlightProject = projectsData[0];
-
 //get the Projects data
 
 async function getProjectsData() {
@@ -168,6 +164,10 @@ class ProjectCard {
     };
 };
 
+//It appears that the spotlightProject will only work if it is a global variable
+
+let spotlightProject;
+
 //Populate the project list with the project card data
 
 const projectList = document.querySelector("#projectList");
@@ -190,44 +190,45 @@ getProjectsData().then( response => {
             projectsData.push(projectCardInstance);
 
             projectList.append(projectCardInstance.buildCard());
+        };
+    };
 
-            //Find out how many project cards there are
+    //Find out how many project cards there are
 
-            const numberOfProjects = projectsData.length;
+    const numberOfProjects = projectsData.length;
 
-            //The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
+    //The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
 
-            let spotlightProjectNum = 0; 
+    let spotlightProjectNum = 0; 
 
-            //Spotlight one project
-            //Default to the first one
+    //Spotlight one project
+    //Default to the first one
 
-            spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
+    spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
 
-            //The functions for the arrows
+    //The functions for the arrows
 
-            function arrowLeftHandler() {
-                console.log("Left arrow clicked!");
-                spotlightProjectNum -= 1;
-                if (spotlightProjectNum === 0) {
-                    spotlightProjectNum = (numberOfProjects - 1);
-                };
-                spotlightProject = projectsData[spotlightProjectNum]; 
-            };
+    function arrowLeftHandler() {
+        console.log("Left arrow clicked!");
+        spotlightProjectNum -= 1;
+        if (spotlightProjectNum === 0) {
+            spotlightProjectNum = (numberOfProjects - 1);
+        };
+            spotlightProject = projectsData[spotlightProjectNum]; 
+        };
 
-            function arrowRightHandler() {
-                console.log("Right arrow clicked!");
-                (spotlightProjectNum += 1) % numberOfProjects;
-                spotlightProject = projectsData[spotlightProjectNum]; 
-            };
+    function arrowRightHandler() {
+        console.log("Right arrow clicked!");
+        (spotlightProjectNum += 1) % numberOfProjects;
+            spotlightProject = projectsData[spotlightProjectNum]; 
+        };
 
-            //Add event handlers for the arrows around here
+    //Add event handlers for the arrows around here
 
-            document.querySelector(".arrow-left").addEventListener("click", arrowLeftHandler);
-            document.querySelector(".arrow-right").addEventListener("click", arrowRightHandler);
-        }
-    }
+    document.querySelector(".arrow-left").addEventListener("click", arrowLeftHandler);
+    document.querySelector(".arrow-right").addEventListener("click", arrowRightHandler);
 });
+
 
 //Try not to beat yourself up too, much.  You are trying your best
 
@@ -237,9 +238,9 @@ getProjectsData().then( response => {
 
 //E-mail validation
 
-const legalChars = /[^a-zA-Z0-9@._-]/ 
+const legalChars = /[^a-zA-Z0-9@._-]/; 
 
-const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const emailAddressForm = document.querySelector("#contactEmail");
 const emailErrorDisplay = document.querySelector("#emailError");
 
