@@ -140,6 +140,7 @@ class ProjectCard {
 
         projectCard.addEventListener("click", function(event) {
             const clickedProjectId = event.target.id;
+            console.log(`Clicked ${this.id}`)
             spotlightProject = projectsData.find(p => p.id == clickedProjectId);
             console.log("Selected Project: ", spotlightProject.project_name);
         });
