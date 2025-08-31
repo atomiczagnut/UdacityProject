@@ -200,7 +200,7 @@ getProjectsData().then( response => {
             //Spotlight one project
             //Default to the first one
 
-            projectsData[spotlightProjectNum].buildProjectSpotlight();
+            let spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
 
             //The functions for the arrows
 
