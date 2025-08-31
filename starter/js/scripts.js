@@ -164,10 +164,6 @@ class ProjectCard {
     };
 };
 
-//It appears that the spotlightProject will only work if it is a global variable
-
-let spotlightProject;
-
 //Populate the project list with the project card data
 
 const projectList = document.querySelector("#projectList");
@@ -204,7 +200,7 @@ getProjectsData().then( response => {
     //Spotlight one project
     //Default to the first one
 
-    spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
+    let spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
 
     //The functions for the arrows
 
@@ -228,7 +224,6 @@ getProjectsData().then( response => {
     document.querySelector(".arrow-left").addEventListener("click", arrowLeftHandler);
     document.querySelector(".arrow-right").addEventListener("click", arrowRightHandler);
 });
-
 
 //Try not to beat yourself up too, much.  You are trying your best
 
