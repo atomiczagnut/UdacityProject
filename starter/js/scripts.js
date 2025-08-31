@@ -142,7 +142,7 @@ class ProjectCard {
             const clickedProjectId = event.target.id;
             console.log(`Clicked ${this.id}`)
             spotlightProject = projectsData.find(p => p.id == clickedProjectId);
-            console.log("Selected Project: ", spotlightProject.project_name);
+            console.log("Selected Project: ", spotlightProject.name);
         });
 
         return projectCard;
@@ -158,7 +158,7 @@ class ProjectCard {
         spotlightContainer.style.backgroundImage = `url(${this.spotlight_img})`;
 
         const spotlightTitle = document.createElement("h3");
-        spotlightTitle.textContent = this.project_name;
+        spotlightTitle.textContent = this.name;
         spotlightTitles.append(spotlightTitle);
 
         const spotlightText = document.createElement("p");
