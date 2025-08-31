@@ -11,7 +11,7 @@ const placeHolderImage = "card_placeholder_bg.webp";
 
 //The spotlightProject needs to be a global variable, so I'm declaring it now
 
-let spotlightProject;
+let spotlightProject = {};
 
 //The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
 //Setting it to zero will default to the first one
@@ -180,23 +180,23 @@ const projectList = document.querySelector("#projectList");
 
 getProjectsData().then( response => {
     for (let key in response ) {
-        if (true) {
-            project_id = response[key].project_id;
-            project_name = response[key].project_name;
-            short_description = response[key].short_description;
-            long_description = response[key].long_description;
-            const cardImg = response[key].card_image || "./starter/images/card_placeholder_bg.webp";
-            card_img = fixPath(cardImg);
-            const spotlightImg = response[key].spotlight_image || "./starter/images/spotlight_placeholder_bg.webp";
-            spotlight_img = fixPath(spotlightImg);
-            url = response[key].url;
-            
-            let projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_img, spotlight_img, url) 
-            
-            projectsData.push(projectCardInstance);
+        
+        project_id = response[key].project_id;
+        project_name = response[key].project_name;
+        short_description = response[key].short_description;
+        long_description = response[key].long_description;
+        const cardImg = response[key].card_image || "./starter/images/card_placeholder_bg.webp";
+        card_img = fixPath(cardImg);
+        const spotlightImg = response[key].spotlight_image || "./starter/images/spotlight_placeholder_bg.webp";
+        spotlight_img = fixPath(spotlightImg);
+        url = response[key].url;
+    
+        let projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_img, spotlight_img, url) 
+    
+        projectsData.push(projectCardInstance);
 
-            projectList.append(projectCardInstance.buildCard());
-        };
+        projectList.append(projectCardInstance.buildCard());
+
     };
 
     //Find out how many project cards there are
@@ -238,6 +238,10 @@ getProjectsData().then( response => {
 
 //E-mail validation
 
+//None of these should fire until you hit the submit button
+
+//Except for the character counter, we want that live!
+
 const legalChars = /[^a-zA-Z0-9@._-]/; 
 
 const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -257,16 +261,19 @@ if (emailAddressForm === "") {
 const msgForm = document.querySelector("#contactMessage");
 const msgFormError = document.querySelector("#messageError");
 let charsInMsg = document.querySelector("#charactersLeft");
-let msgLength = msgForm.length;
+let msgLength = msgForm.value.length;
 
 //Add an event listener that watches how many characters are in the msgForm
-//It updates the charsInMsg, and sends a signal to msgFormError if that exeeds 300 
+//It updates the charsInMsg, and sends a signal to msgFormError if that exeeds 300
+
+//How do we make this live?
 
 const handleNumberOfChars = () => {
     charsInMsg.textContent = `Charcters: ${msgLength} / 300`;
     if (msgForm !== legalChars) {
         msgFormError.textContent = "Message contains illegal characters!";
-    } else if (msgLength > 300) {
+    } else
+        if (msgLength > 300) {
         msgFormError.textContent = "Message conatains too many characters!";
     };
 };
@@ -275,4 +282,4 @@ const handleNumberOfChars = () => {
 
 msgForm.addEventListener("input", handleNumberOfChars);
 
-//I need to work more on Event Listeners!
+//I don't know what I'm doing wrong at this point!

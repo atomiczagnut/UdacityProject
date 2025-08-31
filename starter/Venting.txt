@@ -10,3 +10,5 @@ Anyway, this is where I vent!
 Why is it so hard to make the stupid spotlight thing work?
 
 Why is it so hard to make the message box count the characters?
+
+So, apparently I need to use != instead of !== !?
