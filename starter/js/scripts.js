@@ -13,6 +13,11 @@ const placeHolderImage = "card_placeholder_bg.webp";
 
 let spotlightProject;
 
+//The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
+//Setting it to zero will default to the first one
+
+let spotlightProjectNum = 0; 
+
 //Function to fix errors in paths by deleting the first '.' in the path string
 
 function fixPath(pathToBeFixed) {
@@ -197,12 +202,7 @@ getProjectsData().then( response => {
 
     const numberOfProjects = projectsData.length;
 
-    //The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
-
-    let spotlightProjectNum = 0; 
-
     //Spotlight one project
-    //Default to the first one
 
     spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
 
