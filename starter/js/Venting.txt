@@ -1,0 +1,8 @@
+There are so many things that I feel are wrong with this project.
+
+I have been working on it for weeks and I just feel humiliated and frustrated.
+
+I understand that you are trying to teach us how to manipulate the DOM,
+but does anyone actually build a website this way?
+
+Anyway, this is where I vent!
