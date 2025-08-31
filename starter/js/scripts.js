@@ -9,6 +9,10 @@
 
 const placeHolderImage = "card_placeholder_bg.webp";
 
+//The spotlightProject needs to be a global variable, so I'm declaring it now
+
+let spotlightProject;
+
 //Function to fix errors in paths by deleting the first '.' in the path string
 
 function fixPath(pathToBeFixed) {
@@ -200,7 +204,7 @@ getProjectsData().then( response => {
     //Spotlight one project
     //Default to the first one
 
-    let spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
+    spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
 
     //The functions for the arrows
 
