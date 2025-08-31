@@ -78,6 +78,10 @@ getAboutMeData().then( response => {
 
 let projectsData = [];
 
+//The spotlight should default to the first one
+
+let spotlightProject = projectsData[0];
+
 //get the Projects data
 
 async function getProjectsData() {
@@ -130,9 +134,9 @@ class ProjectCard {
         //Almost verbatim copied from a Google search about using event listeners with JSON
 
         projectCard.addEventListener("click", function(event) {
-            const clickedProjectId = event.target.dataset.project_id;
-            const selectedProject = projectsData.find(p => p.id == clickedProjectId);
-            console.log("Selected Project: ", selectedProject.project_name);
+            const clickedProjectId = event.target.id;
+            spotlightProject = projectsData.find(p => p.id == clickedProjectId);
+            console.log("Selected Project: ", spotlightProject.project_name);
         });
 
         return projectCard;
@@ -141,8 +145,6 @@ class ProjectCard {
     //Method to build the spotlight
     
     buildProjectSpotlight() {
-
-        const currentSpotlight = document.createElement("div");
 
         const spotlightContainer = document.querySelector("#projectSpotlight");
         const spotlightTitles = document.querySelector("#spotlightTitles");
@@ -162,7 +164,7 @@ class ProjectCard {
         spotlightLink.setAttribute("href", this.url);
         spotlightTitles.append(spotlightLink);
 
-        return currentSpotlight;
+        return spotlightContainer;
     };
 };
 
@@ -200,7 +202,7 @@ getProjectsData().then( response => {
             //Spotlight one project
             //Default to the first one
 
-            let spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
+            spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
 
             //The functions for the arrows
 
