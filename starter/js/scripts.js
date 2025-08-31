@@ -94,16 +94,6 @@ async function getProjectsData() {
     }
 };
 
-//The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
-
-let spotlightProjectNum = 0;
-let spotlightProject = projectsData[spotlightProjectNum];
-
-//Target the appropriate DOM elments
-
-const spotlightContainer = document.querySelector("#projectSpotlight")
-const spotlightTitles = document.querySelector("#spotlightTitles") 
-
 //Create a class for your project card data
 
 class ProjectCard {
@@ -136,12 +126,26 @@ class ProjectCard {
         cardText.textContent = this.short_desc;
         projectCard.append(cardText);
 
+        //Attach event listener to each project card
+        //Almost verbatim copied from a Google search about using event listeners with JSON
+
+        projectCard.addEventListener("click", function(event) {
+            const clickedProjectId = event.target.dataset.project_id;
+            const selectedProject = projectsData.find(p => p.id == clickedProjectId);
+            console.log("Selected Project: ", selectedProject.project_name);
+        });
+
         return projectCard;
     };
 
     //Method to build the spotlight
     
     buildProjectSpotlight() {
+
+        const currentSpotlight = document.createElement("div");
+
+        const spotlightContainer = document.querySelector("#projectSpotlight");
+        const spotlightTitles = document.querySelector("#spotlightTitles");
 
         spotlightContainer.style.backgroundImage = `url(${this.spotlight_img})`;
 
@@ -157,6 +161,8 @@ class ProjectCard {
         spotlightLink.textContent = "Click here to see more...";
         spotlightLink.setAttribute("href", this.url);
         spotlightTitles.append(spotlightLink);
+
+        return currentSpotlight;
     };
 };
 
@@ -177,49 +183,49 @@ getProjectsData().then( response => {
             spotlight_img = fixPath(spotlightImg);
             url = response[key].url;
             
-            const projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_img, spotlight_img, url) 
+            let projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_img, spotlight_img, url) 
             
             projectsData.push(projectCardInstance);
 
             projectList.append(projectCardInstance.buildCard());
 
-            //buildProjectSpotlight(spotlightProject);
+            //Find out how many project cards there are
 
-            //For some reason, commenting out that line will allow the projectList to build the cards
-            //But attempting to build the project spotlight breaks everything!
+            const numberOfProjects = projectsData.length;
+
+            //The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
+
+            let spotlightProjectNum = 0; 
+
+            //Spotlight one project
+            //Default to the first one
+
+            projectsData[spotlightProjectNum].buildProjectSpotlight();
+
+            //The functions for the arrows
+
+            function arrowLeftHandler() {
+                console.log("Left arrow clicked!");
+                spotlightProjectNum -= 1;
+                if (spotlightProjectNum === 0) {
+                    spotlightProjectNum = (numberOfProjects - 1);
+                };
+                spotlightProject = projectsData[spotlightProjectNum]; 
+            };
+
+            function arrowRightHandler() {
+                console.log("Right arrow clicked!");
+                (spotlightProjectNum += 1) % numberOfProjects;
+                spotlightProject = projectsData[spotlightProjectNum]; 
+            };
+
+            //Add event handlers for the arrows around here
+
+            document.querySelector(".arrow-left").addEventListener("click", arrowLeftHandler);
+            document.querySelector(".arrow-right").addEventListener("click", arrowRightHandler);
         }
     }
 });
-
-//Find out how many projects there are
-
-const numberOfProjects = projectsData.length;
-
-//Spotlight one project
-//Default to the first one
-
-//This is where I was saying buildProjectSpotlight(spotlightProject)
-//But that doesn't work!
-
-//The functions for the arrows
-
-function arrowLeftHandler() {
-    spotlightProjectNum -= 1
-    if (spotlightProjectNum === 0) {
-        spotlightProjectNum = (numberOfProjects - 1);
-    };
-    spotlightProject = projectsData[spotlightProjectNum]; 
-};
-
-function arrowRightHandler() {
-    (spotlightProjectNum += 1) % numberOfProjects;
-    spotlightProject = projectsData[spotlightProjectNum]; 
-};
-
-//Add event handlers for the arrows around here
-
-document.querySelector("#arrow-left").addEventListener("click", arrowLeftHandler);
-document.querySelector("#arrow-right").addEventListener("click", arrowRightHandler);
 
 //Try not to beat yourself up too, much.  You are trying your best
 
@@ -253,7 +259,7 @@ let msgLength = msgForm.length;
 //Add an event listener that watches how many characters are in the msgForm
 //It updates the charsInMsg, and sends a signal to msgFormError if that exeeds 300 
 
-const handleNumberOfChars = (numberOfChars) => {
+const handleNumberOfChars = () => {
     charsInMsg.textContent = `Charcters: ${msgLength} / 300`;
     if (msgForm !== legalChars) {
         msgFormError.textContent = "Message contains illegal characters!";
