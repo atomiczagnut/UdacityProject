@@ -247,20 +247,19 @@ const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const emailAddressForm = document.querySelector("#contactEmail");
 const emailErrorDisplay = document.querySelector("#emailError");
 
-if (emailAddressForm === "") {
-    emailErrorDisplay.textContent = "E-mail must be filled out!";
-} else if (emailAddressForm !== validEmail) {
-    emailErrorDisplay.textContent = "Invalid E-Mail Address!";
-} else if (emailAddressForm !== legalChars) {
-    emailErrorDisplay.textContent = "E-mail contains invalid characters!";
-};
+//if (emailAddressForm === "") {
+//    emailErrorDisplay.textContent = "E-mail must be filled out!";
+//} else if (emailAddressForm !== validEmail) {
+//    emailErrorDisplay.textContent = "Invalid E-Mail Address!";
+//} else if (emailAddressForm !== legalChars) {
+//    emailErrorDisplay.textContent = "E-mail contains invalid characters!";
+//};
 
 //Message validation
 
 const msgForm = document.querySelector("#contactMessage");
 const msgFormError = document.querySelector("#messageError");
 let charsInMsg = document.querySelector("#charactersLeft");
-let msgLength = msgForm.value.length;
 
 //Add an event listener that watches how many characters are in the msgForm
 //It updates the charsInMsg, and sends a signal to msgFormError if that exeeds 300
@@ -268,15 +267,16 @@ let msgLength = msgForm.value.length;
 //How do we make this live?
 
 const handleNumberOfChars = () => {
+    let msgLength = msgForm.value.length;
     charsInMsg.textContent = `Charcters: ${msgLength} / 300`;
-    if (msgForm !== legalChars) {
-        msgFormError.textContent = "Message contains illegal characters!";
-    } else
-        if (msgLength > 300) {
+    if (msgLength > 300) {
         msgFormError.textContent = "Message conatains too many characters!";
-    };
+    }
 };
 
-//TODO: Work on making it an event listener
-
 msgForm.addEventListener("input", handleNumberOfChars);
+
+//Handle other things after the user clicks 'Submit'
+//if (msgForm !== legalChars) {
+//        msgFormError.textContent = "Message contains illegal characters!";
+//};
