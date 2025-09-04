@@ -236,24 +236,11 @@ getProjectsData().then( response => {
 
 //Validitation stuff
 
-//E-mail validation
-
-//None of these should fire until you hit the submit button
-//Except for the character counter, we want that live!
-
 const legalChars = /[^a-zA-Z0-9@._-]/; 
 
 const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const emailAddressForm = document.querySelector("#contactEmail");
 const emailErrorDisplay = document.querySelector("#emailError");
-
-//if (emailAddressForm === "") {
-//    emailErrorDisplay.textContent = "E-mail must be filled out!";
-//} else if (emailAddressForm !== validEmail) {
-//    emailErrorDisplay.textContent = "Invalid E-Mail Address!";
-//} else if (emailAddressForm !== legalChars) {
-//    emailErrorDisplay.textContent = "E-mail contains invalid characters!";
-//};
 
 //Message validation
 
@@ -262,9 +249,6 @@ const msgFormError = document.querySelector("#messageError");
 let charsInMsg = document.querySelector("#charactersLeft");
 
 //Add an event listener that watches how many characters are in the msgForm
-//It updates the charsInMsg, and sends a signal to msgFormError if that exeeds 300
-
-//How do we make this live?
 
 const handleNumberOfChars = () => {
     let msgLength = msgForm.value.length;
@@ -275,6 +259,16 @@ const handleNumberOfChars = () => {
 };
 
 msgForm.addEventListener("input", handleNumberOfChars);
+
+//E-mail validation
+
+//if (emailAddressForm === "") {
+//    emailErrorDisplay.textContent = "E-mail must be filled out!";
+//} else if (emailAddressForm !== validEmail) {
+//    emailErrorDisplay.textContent = "Invalid E-Mail Address!";
+//} else if (emailAddressForm !== legalChars) {
+//    emailErrorDisplay.textContent = "E-mail contains invalid characters!";
+//};
 
 //Handle other things after the user clicks 'Submit'
 //if (msgForm !== legalChars) {
