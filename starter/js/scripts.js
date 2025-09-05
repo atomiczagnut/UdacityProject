@@ -252,13 +252,17 @@ let charsInMsg = document.querySelector("#charactersLeft");
 
 const handleNumberOfChars = () => {
     let msgLength = msgForm.value.length;
-    charsInMsg.textContent = `Charcters: ${msgLength} / 300`;
-    if (msgLength > 300) {
-        msgFormError.textContent = "Message conatains too many characters!";
-    }
 };
 
 msgForm.addEventListener("input", handleNumberOfChars);
+
+//Add an eventListener that throws an error for too many letters
+
+const handleTooManyCharacter = () => {
+    if (msgLength > 300) {
+       msgFormError.textContent = "Message conatains too many characters!";
+    }
+};
 
 //E-mail validation
 
