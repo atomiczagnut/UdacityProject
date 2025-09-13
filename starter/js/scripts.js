@@ -254,7 +254,7 @@ const submitButton = document.querySelector("#formsubmit");
 const handleNumberOfChars = () => {
     let msgLength = msgForm.value.length;
     charsInMsg.textContent = `Charcters: ${msgLength} / 300`;
-    if (msgForm === legalChars) {
+    if (!msgForm.value.includes(legalChars)) {
         msgFormError.textContent = "Message contains illegal characters!";
     } else
         if (msgLength > 300) {
@@ -268,13 +268,16 @@ msgForm.addEventListener("input", handleNumberOfChars);
 
 //Function for e-mail validation
 
-const handleValidateEmail = () => {
-    if (emailAddressForm === "") {
+const handleValidateEmail = (event) => {
+    event.preventDefault();
+    if (emailAddressForm.value === "") {
         emailErrorDisplay.textContent = "E-mail must be filled out!";
-    } else if (emailAddressForm === validEmail) {
+    } else if (emailAddressForm.match(validEmail)) {
         emailErrorDisplay.textContent = "Invalid E-Mail Address!";
-    } else if (emailAddressForm === legalChars) {
+    } else if (!emailAddressForm.inlcudes(legalChars)) {
         emailErrorDisplay.textContent = "E-mail contains invalid characters!";
+    } else {
+        alert("Message successfully submitted!");
     };
 };
 
