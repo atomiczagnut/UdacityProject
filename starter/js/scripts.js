@@ -246,35 +246,38 @@ const emailErrorDisplay = document.querySelector("#emailError");
 
 const msgForm = document.querySelector("#contactMessage");
 const msgFormError = document.querySelector("#messageError");
-let charsInMsg = document.querySelector("#charactersLeft");
+const charsInMsg = document.querySelector("#charactersLeft");
+const submitButton = document.querySelector("#formsubmit");
 
-//Add an event listener that watches how many characters are in the msgForm
+//Function for the character counter
 
 const handleNumberOfChars = () => {
     let msgLength = msgForm.value.length;
+    charsInMsg.textContent = `Charcters: ${msgLength} / 300`;
+    if (msgForm === legalChars) {
+        msgFormError.textContent = "Message contains illegal characters!";
+    } else
+        if (msgLength > 300) {
+        msgFormError.textContent = "Message conatains too many characters!";
+    };
 };
+
+//Event listener for the character counter
 
 msgForm.addEventListener("input", handleNumberOfChars);
 
-//Add an eventListener that throws an error for too many letters
+//Function for e-mail validation
 
-const handleTooManyCharacter = () => {
-    if (msgLength > 300) {
-       msgFormError.textContent = "Message conatains too many characters!";
-    }
+const validateEmail = () => {
+    if (emailAddressForm === "") {
+        emailErrorDisplay.textContent = "E-mail must be filled out!";
+    } else if (emailAddressForm === validEmail) {
+        emailErrorDisplay.textContent = "Invalid E-Mail Address!";
+    } else if (emailAddressForm === legalChars) {
+        emailErrorDisplay.textContent = "E-mail contains invalid characters!";
+    };
 };
 
-//E-mail validation
+//Event listener for the submit button
 
-//if (emailAddressForm === "") {
-//    emailErrorDisplay.textContent = "E-mail must be filled out!";
-//} else if (emailAddressForm !== validEmail) {
-//    emailErrorDisplay.textContent = "Invalid E-Mail Address!";
-//} else if (emailAddressForm !== legalChars) {
-//    emailErrorDisplay.textContent = "E-mail contains invalid characters!";
-//};
-
-//Handle other things after the user clicks 'Submit'
-//if (msgForm !== legalChars) {
-//        msgFormError.textContent = "Message contains illegal characters!";
-//};
+submitButton.addEventListener("click", validateEmail);
