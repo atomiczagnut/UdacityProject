@@ -268,7 +268,7 @@ msgForm.addEventListener("input", handleNumberOfChars);
 
 //Function for e-mail validation
 
-const validateEmail = () => {
+const handleValidateEmail = () => {
     if (emailAddressForm === "") {
         emailErrorDisplay.textContent = "E-mail must be filled out!";
     } else if (emailAddressForm === validEmail) {
@@ -280,4 +280,4 @@ const validateEmail = () => {
 
 //Event listener for the submit button
 
-submitButton.addEventListener("click", validateEmail);
+submitButton.addEventListener("click", handleValidateEmail);
