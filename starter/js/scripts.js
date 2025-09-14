@@ -269,16 +269,37 @@ msgForm.addEventListener("input", handleNumberOfChars);
 //Function for e-mail validation
 
 const handleValidateEmail = (event) => {
+    
+    //Disable the default action of submit
     event.preventDefault();
-    if (emailAddressForm.value === "") {
+    
+    //Get the e-mail into a variable
+    const emailValue = emailAddressForm.value.trim();
+
+    //Clear previous errors
+    emailErrorDisplay.textContent = "";
+
+    //Make sure the e-mail form is filled out
+    if (emailValue === "") {
         emailErrorDisplay.textContent = "E-mail must be filled out!";
-    } else if (emailAddressForm.match(validEmail)) {
-        emailErrorDisplay.textContent = "Invalid E-Mail Address!";
-    } else if (!emailAddressForm.includes(legalChars)) {
-        emailErrorDisplay.textContent = "E-mail contains invalid characters!";
-    } else {
-        alert("Message successfully submitted!");
+        return false;
     };
+    
+    //Make sure the e-mail is valid
+    if (!emailValue.match(validEmail)) {
+        emailErrorDisplay.textContent = "Invalid E-Mail Address!";
+        return false;
+    };
+    
+    //Make sure the e-mail includes valid characters
+    if (!emailValue.includes(legalChars)) {
+        emailErrorDisplay.textContent = "E-mail contains invalid characters!";
+        return false;
+    };
+    
+    //Pop-up message for a successful submission
+    alert("Message successfully submitted!");
+    return true;    
 };
 
 //Event listener for the submit button
