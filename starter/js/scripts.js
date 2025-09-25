@@ -232,8 +232,6 @@ getProjectsData().then( response => {
 
 //Try not to beat yourself up too, much.  You are trying your best
 
-//Use try/catch to handle any other errors
-
 //Validitation stuff
 
 const legalChars = /[^a-zA-Z0-9@._-]/; 
@@ -248,6 +246,7 @@ const msgForm = document.querySelector("#contactMessage");
 const msgFormError = document.querySelector("#messageError");
 const charsInMsg = document.querySelector("#charactersLeft");
 const submitButton = document.querySelector("#formsubmit");
+const entireForm = document.querySelector("#formSection")
 
 //Function for the character counter
 
@@ -272,6 +271,7 @@ const handleValidateEmail = (event) => {
     
     //Disable the default action of submit
     event.preventDefault();
+    console.log("Submit prevented");
     
     //Get the e-mail into a variable
     const emailValue = emailAddressForm.value.trim();
@@ -284,24 +284,20 @@ const handleValidateEmail = (event) => {
         emailErrorDisplay.textContent = "E-mail must be filled out!";
         return false;
     };
-    
-    //Make sure the e-mail is valid
-    if (!emailValue.match(validEmail)) {
-        emailErrorDisplay.textContent = "Invalid E-Mail Address!";
-        return false;
-    };
-    
+
     //Make sure the e-mail includes valid characters
     if (!emailValue.includes(legalChars)) {
         emailErrorDisplay.textContent = "E-mail contains invalid characters!";
         return false;
-    };
     
-    //Pop-up message for a successful submission
-    alert("Message successfully submitted!");
-    return true;    
+    //Make sure the e-mail is valid
+    } else if (!emailValue.match(validEmail)) {
+        emailErrorDisplay.textContent = "Invalid E-Mail Address!";
+        return false;
+    };
+        
 };
 
 //Event listener for the submit button
 
-submitButton.addEventListener("click", handleValidateEmail);
+entireForm.addEventListener("submit", handleValidateEmail);
