@@ -255,8 +255,7 @@ const handleNumberOfChars = () => {
     charsInMsg.textContent = `Characters: ${msgLength} / 300`;
     if (msgForm.value.test(legalChars)) {
         msgFormError.textContent = "Message contains illegal characters!";
-    } else
-        if (msgLength > 300) {
+    } else if (msgLength > 300) {
         msgFormError.textContent = "Message contains too many characters!";
     };
 };
@@ -271,6 +270,7 @@ const handleValidateEmail = (event) => {
     
     //Disable the default action of submit
     event.preventDefault();
+    //This line is for debugging
     console.log("Submit prevented");
     
     //Get the e-mail into a variable
@@ -283,10 +283,9 @@ const handleValidateEmail = (event) => {
     if (emailValue === "") {
         emailErrorDisplay.textContent = "E-mail must be filled out!";
         return false;
-    };
 
-    //Make sure the e-mail includes valid characters
-    if (emailValue.test(legalChars)) {
+    //Make sure the e-mail includes valid characters 
+    } else if (emailValue.test(legalChars)) {
         emailErrorDisplay.textContent = "E-mail contains invalid characters!";
         return false;
     
@@ -295,7 +294,9 @@ const handleValidateEmail = (event) => {
         emailErrorDisplay.textContent = "Invalid E-Mail Address!";
         return false;
     };
-        
+
+    alert("Successful submission!");
+    return true;
 };
 
 //Event listener for the submit button
