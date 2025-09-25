@@ -253,7 +253,7 @@ const entireForm = document.querySelector("#formSection")
 const handleNumberOfChars = () => {
     let msgLength = msgForm.value.length;
     charsInMsg.textContent = `Characters: ${msgLength} / 300`;
-    if (!msgForm.value.includes(legalChars)) {
+    if (msgForm.value.test(legalChars)) {
         msgFormError.textContent = "Message contains illegal characters!";
     } else
         if (msgLength > 300) {
@@ -286,12 +286,12 @@ const handleValidateEmail = (event) => {
     };
 
     //Make sure the e-mail includes valid characters
-    if (!emailValue.includes(legalChars)) {
+    if (emailValue.test(legalChars)) {
         emailErrorDisplay.textContent = "E-mail contains invalid characters!";
         return false;
     
     //Make sure the e-mail is valid
-    } else if (!emailValue.match(validEmail)) {
+    } else if (emailValue.match(validEmail)) {
         emailErrorDisplay.textContent = "Invalid E-Mail Address!";
         return false;
     };
