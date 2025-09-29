@@ -97,7 +97,6 @@ getAboutMeData().then( response => {
 });
 
 //Global object for the projects data
-//Should it be an empty array that we populate with objects?
 
 let projectsData = [];
 
@@ -117,7 +116,7 @@ async function getProjectsData() {
     }
 };
 
-//Create a class for your project card data
+//Create a class for the project card data
 
 class ProjectCard {
     constructor(id, name, short_desc, long_desc, card_img, spotlight_img, url) {
@@ -150,8 +149,6 @@ class ProjectCard {
         projectCard.append(cardText);
 
         //Attach event listener to each project card
-        //Almost verbatim copied from a Google search about using event listeners with JSON
-        //However, it still needed some tweaking
 
         projectCard.addEventListener("click", function(event) {
             const clickedProjectId = event.currentTarget.id;
@@ -173,7 +170,7 @@ class ProjectCard {
         const spotlightTitles = document.querySelector("#spotlightTitles");
 
         //Clear previous content
-        spotlightTitles.innerHTML = "";
+        spotlightTitles.replaceChildren();
 
         //Build new spotlight
         spotlightContainer.style.backgroundImage = `url(${this.spotlight_img})`;
@@ -190,8 +187,6 @@ class ProjectCard {
         spotlightLink.textContent = "Click here to see more...";
         spotlightLink.setAttribute("href", this.url);
         spotlightTitles.append(spotlightLink);
-
-        return spotlightContainer;
     };
 };
 
@@ -293,7 +288,6 @@ const emailErrorDisplay = document.querySelector("#emailError");
 const msgForm = document.querySelector("#contactMessage");
 const msgFormError = document.querySelector("#messageError");
 const charsInMsg = document.querySelector("#charactersLeft");
-const submitButton = document.querySelector("#formsubmit");
 const entireForm = document.querySelector("#formSection")
 
 //Function for the character counter
@@ -320,8 +314,6 @@ const handleValidateEmail = (event) => {
     
     //Disable the default action of submit
     event.preventDefault();
-    //This line is for debugging
-    console.log("Submit prevented");
     
     //Get the e-mail into a variable
     const emailValue = emailAddressForm.value.trim();
