@@ -139,9 +139,9 @@ class ProjectCard {
         //Almost verbatim copied from a Google search about using event listeners with JSON
 
         projectCard.addEventListener("click", function(event) {
-            const clickedProjectId = event.target.id;
-            console.log(`Clicked ${this.id}`)
-            spotlightProject = projectsData.find(p => p.id == clickedProjectId);
+            const clickedProjectId = event.currentTarget.id;
+            console.log(`Clicked ${clickedProjectId}`)
+            spotlightProject = projectsData.find(p => p.id === clickedProjectId);
             console.log("Selected Project: ", spotlightProject.id);
         });
 
@@ -155,6 +155,10 @@ class ProjectCard {
         const spotlightContainer = document.querySelector("#projectSpotlight");
         const spotlightTitles = document.querySelector("#spotlightTitles");
 
+        //Clear previous content
+        spotlightTitles.innerHTML = "";
+
+        //Build new spotlight
         spotlightContainer.style.backgroundImage = `url(${this.spotlight_img})`;
 
         const spotlightTitle = document.createElement("h3");
@@ -295,10 +299,10 @@ const handleValidateEmail = (event) => {
         return false;
     };
 
+    //Success!
     alert("Successful submission!");
     return true;
 };
 
 //Event listener for the submit button
-
 entireForm.addEventListener("submit", handleValidateEmail);
