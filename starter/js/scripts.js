@@ -143,6 +143,8 @@ class ProjectCard {
             console.log(`Clicked ${clickedProjectId}`)
             spotlightProject = projectsData.find(p => p.id === clickedProjectId);
             console.log("Selected Project: ", spotlightProject.id);
+
+            spotlightProject.buildProjectSpotlight();
         });
 
         return projectCard;
@@ -261,6 +263,8 @@ const handleNumberOfChars = () => {
         msgFormError.textContent = "Message contains illegal characters!";
     } else if (msgLength > 300) {
         msgFormError.textContent = "Message contains too many characters!";
+    } else {
+        msgFormError.textContent = "";
     };
 };
 
