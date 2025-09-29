@@ -12,16 +12,6 @@ const placeHolderImage = "card_placeholder_bg.webp";
 
 const mobileBreakpoint = window.matchMedia("(max-width: 768px)");
 
-//The spotlightProject needs to be a global variable, so I'm declaring it now
-
-let spotlightProject = {};
-
-//The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
-//Setting it to zero will default to the first one
-
-let spotlightProjectNum = 0;
-
-//Global object.  It works, but is it best practice?
 //Function to fix errors in paths by deleting the first '.' in the path string
 
 function fixPath(pathToBeFixed) {
@@ -166,7 +156,7 @@ class ProjectCard {
         projectCard.addEventListener("click", function(event) {
             const clickedProjectId = event.currentTarget.id;
             console.log(`Clicked ${clickedProjectId}`)
-            spotlightProject = projectsData.find(p => p.id === clickedProjectId);
+            const spotlightProject = projectsData.find(p => p.id === clickedProjectId);
             console.log("Selected Project: ", spotlightProject.id);
 
             spotlightProject.buildProjectSpotlight();
