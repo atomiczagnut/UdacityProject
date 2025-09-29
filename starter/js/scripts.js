@@ -9,6 +9,10 @@
 
 const placeHolderImage = "card_placeholder_bg.webp";
 
+//Mobile breakpoint is a global variable
+
+const mobileBreakpoint = window.matchMedia("(max-width: 768px)");
+
 //The spotlightProject needs to be a global variable, so I'm declaring it now
 
 let spotlightProject = {};
@@ -23,6 +27,28 @@ let spotlightProjectNum = 0;
 
 function fixPath(pathToBeFixed) {
     return pathToBeFixed.slice(1);
+};
+
+//Logic for switching arrow handlers
+let currentLeftHandler = null;
+let currentRightHandler = null;
+
+function updateArrowListeners(leftHandler, rightHandler) {
+    const leftArrow = document.querySelector(".arrow-left");
+    const rightArrow = document.querySelector(".arrow-right");
+
+    //Remove existing listeners
+    if (currentLeftHandler) {
+        leftArrow.removeEventListener("click", currentLeftHandler);
+        rightArrow.removeEventListener("click", currentRightHandler);
+    };
+
+    //Add new listeners
+    currentLeftHandler = leftHandler;
+    currentRightHandler = rightHandler;
+
+    leftArrow.addEventListener("click", currentLeftHandler);
+    rightArrow.addEventListener("click", currentRightHandler);
 };
 
 //Name in the title
@@ -187,15 +213,15 @@ const projectList = document.querySelector("#projectList");
 getProjectsData().then( response => {
     for (let key in response ) {
         
-        project_id = response[key].project_id;
-        project_name = response[key].project_name;
-        short_description = response[key].short_description;
-        long_description = response[key].long_description;
-        const cardImg = response[key].card_image || "./starter/images/card_placeholder_bg.webp";
-        card_img = fixPath(cardImg);
-        const spotlightImg = response[key].spotlight_image || "./starter/images/spotlight_placeholder_bg.webp";
-        spotlight_img = fixPath(spotlightImg);
-        url = response[key].url;
+        let project_id = response[key].project_id;
+        let project_name = response[key].project_name;
+        let short_description = response[key].short_description;
+        let long_description = response[key].long_description;
+        let cardImg = response[key].card_image || "./starter/images/card_placeholder_bg.webp";
+        let card_img = fixPath(cardImg);
+        let spotlightImg = response[key].spotlight_image || "./starter/images/spotlight_placeholder_bg.webp";
+        let spotlight_img = fixPath(spotlightImg);
+        let url = response[key].url;
     
         let projectCardInstance = new ProjectCard(project_id, project_name, short_description, long_description, card_img, spotlight_img, url) 
     
@@ -207,11 +233,16 @@ getProjectsData().then( response => {
 
     //Display the first project by default
     
-    projectsData[1].buildProjectSpotlight();
+    projectsData[0].buildProjectSpotlight();
+    
+    //Check initial state of media
+    handleMediaChange(mobileBreakpoint);
+
+    //Listen for changes in media
+    mobileBreakpoint.addEventListener("change", handleMediaChange);
 });
 
 //Responsive design handler for the arrows
-    const mobileBreakpoint = window.matchMedia("(max-width: 768px");
     
 //Handle media query changes
 function handleMediaChange(mediaQuery) {
@@ -221,12 +252,6 @@ function handleMediaChange(mediaQuery) {
         setupVerticalScroll();
     }
 };
-
-//Check initial state
-handleMediaChange(mobileBreakpoint);
-
-//Listen for changes
-mobileBreakpoint.mediaQueryListener(handleMediaChange);
 
 function setupVerticalScroll() {
         
@@ -258,34 +283,12 @@ function setupHorizontalScroll() {
         
     function scrollRight() {
         projectList.scrollBy({
-            right: 200,
+            left: 200,
             behavior: "smooth"
         });
     };
 
     updateArrowListeners(scrollLeft, scrollRight);
-};
-
-//Logic for switching arrow handlers
-let currentLeftHandler = null;
-let currentRightHandler = null;
-
-function updateArrowListeners(leftHandler, rightHandler) {
-    const leftArrow = document.querySelector(".arrow-left");
-    const rightArrow = document.querySelector(".arrow-right");
-
-    //Remove existing listeners
-    if (currentLeftHandler) {
-        leftArrow.removeEventListener("click", currentLeftHandler);
-        rightArrow.removeEventListener("click", currentRightHandler);
-    };
-
-    //Add new listeners
-    currentLeftHandler = leftHandler;
-    currentRightHandler = rightHandler;
-
-    leftArrow.addEventListener("click", currentLeftHandler);
-    rightArrow.addEventListner("click", currentRightHandler);
 };
 
 //You are doing great!
