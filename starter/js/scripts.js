@@ -3,7 +3,6 @@
 //JavaScript that manipulates a DOM of an exisiting (and fairly sparse), website.
 //The point is to populate it with elements, especially cards that define projects
 //It is meant to teach working with the DOM and JavaScript
-//It has slowly driven me insane :P
 
 //This is a default image in case anything fails
 
@@ -273,7 +272,7 @@ function setupVerticalScroll() {
 };
 
 function setupHorizontalScroll() {
-        
+
     function scrollLeft() {
         projectList.scrollBy({
             left: -200,
@@ -290,8 +289,6 @@ function setupHorizontalScroll() {
 
     updateArrowListeners(scrollLeft, scrollRight);
 };
-
-//You are doing great!
 
 //Validitation stuff
 
