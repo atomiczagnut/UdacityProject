@@ -16,8 +16,9 @@ let spotlightProject = {};
 //The spotlightProjectNum variable will make it easier to scroll though the array of projects with the arrows
 //Setting it to zero will default to the first one
 
-let spotlightProjectNum = 0; 
+let spotlightProjectNum = 0;
 
+//Global object.  It works, but is it best practice?
 //Function to fix errors in paths by deleting the first '.' in the path string
 
 function fixPath(pathToBeFixed) {
@@ -46,8 +47,6 @@ async function getAboutMeData() {
     }
 };
 
-//Global object.  It works, but is it best practice?
-
 let aboutMeData = {
     aboutMe: "",
     headshot: ""
@@ -61,20 +60,20 @@ getAboutMeData().then( response => {
 
     //About Me section
 
-    aboutMeContainer = document.querySelector("#aboutMe");
+    const aboutMeContainer = document.querySelector("#aboutMe");
 
     //About Me text
 
-    aboutMeText = document.createElement("p");    
+    const aboutMeText = document.createElement("p");    
     aboutMeText.textContent = aboutMeData.aboutMe;
     aboutMeContainer.append(aboutMeText);
 
     //About Me headshot
 
-    headshotContainer = document.createElement("div");
+    const headshotContainer = document.createElement("div");
     headshotContainer.classList.add("headshotContainer");
 
-    headshotImg = document.createElement("img");
+    const headshotImg = document.createElement("img");
     headshotImg.setAttribute("src", fixPath(aboutMeData.headshot));
     headshotImg.setAttribute("alt", "A headshot image");
 
@@ -137,6 +136,7 @@ class ProjectCard {
 
         //Attach event listener to each project card
         //Almost verbatim copied from a Google search about using event listeners with JSON
+        //However, it still needed some tweaking
 
         projectCard.addEventListener("click", function(event) {
             const clickedProjectId = event.currentTarget.id;
@@ -205,38 +205,90 @@ getProjectsData().then( response => {
 
     };
 
-    //Find out how many project cards there are
-
-    const numberOfProjects = projectsData.length;
-
-    //Spotlight one project
-
-    spotlightProject = projectsData[spotlightProjectNum].buildProjectSpotlight();
-
-    //The functions for the arrows
-
-    function arrowLeftHandler() {
-        console.log("Left arrow clicked!");
-        spotlightProjectNum -= 1;
-        if (spotlightProjectNum === 0) {
-            spotlightProjectNum = (numberOfProjects - 1);
-        };
-            spotlightProject = projectsData[spotlightProjectNum]; 
-        };
-
-    function arrowRightHandler() {
-        console.log("Right arrow clicked!");
-        (spotlightProjectNum += 1) % numberOfProjects;
-            spotlightProject = projectsData[spotlightProjectNum]; 
-        };
-
-    //Add event handlers for the arrows around here
-
-    document.querySelector(".arrow-left").addEventListener("click", arrowLeftHandler);
-    document.querySelector(".arrow-right").addEventListener("click", arrowRightHandler);
+    //Display the first project by default
+    
+    projectsData[1].buildProjectSpotlight();
 });
 
-//Try not to beat yourself up too, much.  You are trying your best
+//Responsive design handler for the arrows
+    const mobileBreakpoint = window.matchMedia("(max-width: 768px");
+    
+//Handle media query changes
+function handleMediaChange(mediaQuery) {
+    if (mediaQuery.matches) {
+        setupHorizontalScroll();
+    } else {
+        setupVerticalScroll();
+    }
+};
+
+//Check initial state
+handleMediaChange(mobileBreakpoint);
+
+//Listen for changes
+mobileBreakpoint.mediaQueryListener(handleMediaChange);
+
+function setupVerticalScroll() {
+        
+    function scrollUp() {
+        projectList.scrollBy({
+            top: -200,
+            behavior: "smooth"
+        });
+    };
+
+    function scrollDown() {
+        projectList.scrollBy({
+            top: 200,
+            behavior: "smooth"
+        });
+    };
+
+    updateArrowListeners(scrollUp, scrollDown);
+};
+
+function setupHorizontalScroll() {
+        
+    function scrollLeft() {
+        projectList.scrollBy({
+            left: -200,
+            behavior: "smooth"
+        });
+    };
+        
+    function scrollRight() {
+        projectList.scrollBy({
+            right: 200,
+            behavior: "smooth"
+        });
+    };
+
+    updateArrowListeners(scrollLeft, scrollRight);
+};
+
+//Logic for switching arrow handlers
+let currentLeftHandler = null;
+let currentRightHandler = null;
+
+function updateArrowListeners(leftHandler, rightHandler) {
+    const leftArrow = document.querySelector(".arrow-left");
+    const rightArrow = document.querySelector(".arrow-right");
+
+    //Remove existing listeners
+    if (currentLeftHandler) {
+        leftArrow.removeEventListener("click", currentLeftHandler);
+        rightArrow.removeEventListener("click", currentRightHandler);
+    };
+
+    //Add new listeners
+    currentLeftHandler = leftHandler;
+    currentRightHandler = rightHandler;
+
+    leftArrow.addEventListener("click", currentLeftHandler);
+    rightArrow.addEventListner("click", currentRightHandler);
+};
+
+//You are doing great!
 
 //Validitation stuff
 
